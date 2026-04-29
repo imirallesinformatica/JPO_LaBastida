@@ -11,20 +11,13 @@
       text-align: center;
     }
     h2 { margin-top: 20px; font-size: 22px; }
-
     #scanner-container {
       width: 100%;
       max-width: 400px;
       margin: 20px auto;
-      position: relative;
     }
-    video {
-      width: 100%;
-      border-radius: 8px;
-      display: block;
-    }
+    video { width: 100%; border-radius: 8px; display: block; }
     canvas { display: none; }
-
     #resultado {
       position: fixed;
       top: 0; left: 0;
@@ -47,6 +40,7 @@
       margin-bottom: 30px;
       max-width: 90%;
       word-wrap: break-word;
+      line-height: 1.5;
     }
     .boton {
       padding: 15px 30px;
@@ -72,7 +66,7 @@
 </head>
 <body>
 
-<h2>Validació QR - Portes Obertes</h2>
+<h2>Validació QR - Graduació 2026</h2>
 <p id="loading">Iniciant càmera...</p>
 
 <div id="scanner-container">
@@ -88,8 +82,7 @@
 <div id="resultado"></div>
 
 <script>
-  // 🔴 SUBSTITUEIX AIXÒ PER LA TEVA URL D'APPS SCRIPT
-  const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbx7xx5fmNpRDpLSV6SxwBvfKZcoyDEA2eXnK8bd1xCBUZSH3SaujO73dCcjzHgrLsjm/exec";
+  const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyjGambvCtyanlpp0Zhdj1vvdUIwXy7-v-Zx3K2RBnPA1Xh86P4PDDFylnFKS8b0d392A/exec";
 
   const video  = document.getElementById('video');
   const canvas = document.getElementById('canvas');
@@ -125,7 +118,6 @@
 
   function tick() {
     if (!scanning) return;
-
     if (video.readyState === video.HAVE_ENOUGH_DATA) {
       canvas.width  = video.videoWidth;
       canvas.height = video.videoHeight;
@@ -154,7 +146,6 @@
   }
 
   function processarQR(idQR) {
-    // Mostrar feedback mentre valida
     const resultadoDiv = document.getElementById('resultado');
     resultadoDiv.style.display = 'flex';
     resultadoDiv.className = '';
@@ -162,7 +153,6 @@
     resultadoDiv.style.color = 'white';
     resultadoDiv.innerHTML = '<div class="titulo">⏳ Validant...</div>';
 
-    // Crida a Apps Script via fetch (API pública)
     fetch(APPS_SCRIPT_URL + "?qr=" + encodeURIComponent(idQR))
       .then(r => r.json())
       .then(function(response) {
